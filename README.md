@@ -1,0 +1,1 @@
+The purpose of this project is to simulate the life cycle of a fish species (through egg, larvae, juvenille, and adult) at the individual level accounting for mortality from natural, fishery, or other anthropogenic causes.
