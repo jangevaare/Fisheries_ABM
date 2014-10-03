@@ -27,13 +27,17 @@ spawning_melt = melt(spawning_map)
 spawning_melt=spawning_melt[(is.na(spawning_melt$value)==FALSE),]
 
 ###########################################################
-# SPAWNING (LIST OF BROOD SIZEs, SPAWNING MAP)
+# SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
 ###########################################################
-spawning=function(initial, broods, spawning_map)
-	{
-	
-	}
 
+spawning=function(eggs, spawning_melt){
+	# Number of spawning `sites`
+	sites=dim(spawning_melt)[1]
+	
+	# Assign sites to `eggs`
+	site_assignment = apply((rmultinom(length(eggs), 1, rep(1/sites, sites)) == 1), 2, which)
+	}
+	
 
 ###########################################################
 # NATURAL MORTALITY (LOCATION, STAGE)
