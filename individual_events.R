@@ -30,13 +30,31 @@ spawning_melt=spawning_melt[(is.na(spawning_melt$value)==FALSE),]
 # SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
 ###########################################################
 
-spawning=function(eggs, spawning_melt){
+spawning=function(eggs, spawning_melt, time, event_db){
 	# Number of spawning `sites`
 	sites=dim(spawning_melt)[1]
 	
 	# Assign sites to `eggs`
 	site_assignment = apply((rmultinom(length(eggs), 1, rep(1/sites, sites)) == 1), 2, which)
-	}
+
+	# Output data.frame, event_db == NULL if new simulation
+	if(event_db == NULL){
+		data.frame('agent_id'=1:length(eggs), 
+				   'stage'='egg', 
+				   'location'=site_assignment, 
+				   'birth_d'=time, 
+				   'num_alive'=eggs, 
+				   'num_natural_death'=0, 
+				   'num_anthro_death'=0)}
+	else{
+		rbind(event_db,
+		data.frame('agent_id'=(max(event_db$agent_id)+1):(max(event_db$agent_id)+length(eggs)),
+		 		   'stage'='egg', 
+		 		   'location'=site_assignment, 
+		 		   'birth_d'=time, 
+		 		   'num_alive'=eggs, 
+		 		   'num_natural_death'=0, 
+		 		   'num_anthro_death'=0))}}
 	
 
 ###########################################################
