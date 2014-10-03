@@ -1,0 +1,485 @@
+plot(X1to3, Y1)
+par(mfrow=c(1,3))
+plot(X1to3, Y1)
+Divide the plot window into 3 columns#
+par(mfrow=c(2,2))#
+#
+# Plot 1#
+plot(X1to3, Y1)
+plot(X1to3, Y1, pch=16)
+plot(X1to3, Y1, pch=16, main="Plot 1", xlab="X", ylab="Response 1", cex=2)
+plot(X1to3, Y1, pch=16, main="Plot 1", xlab="X", ylab="Response 1", cex=2, col='blue')
+par(mfrow=c(2,2))#
+#
+# Plot 1#
+plot(X1to3, Y1, pch=16, main="Plot 1", xlab="X", ylab="Response 1", cex=2, col='blue')
+q1lm1=lm(Y1~X1to3)
+Divide the plot window into 3 columns#
+par(mfrow=c(2,2))#
+#
+# Plot 1#
+plot(X1to3, Y1, pch=16, main="Plot 1", xlab="X", ylab="Response 1", cex=2, col='black')#
+#
+q1lm1=lm(Y1~X1to3)#
+#
+abline(q1lm1, lwd=2, lty='2', col='blue')
+abline(q1lm1, lwd=2, lty=2, col='blue')
+summary(q1lm1)
+for(i in c(Y1, Y2, Y3))#
+	{#
+	plot(X1to3, i, pch=16, xlab="X", ylab="Y", cex=2, col='black')#
+	q1lm1=lm(i~X1to3)#
+	abline(q1lm1, lwd=2, lty=2, col='blue')	#
+	}
+Divide the plot window into 3 columns#
+par(mfrow=c(2,2))#
+#
+# Plot #
+plot(X1to3, Y1, pch=16, main="Plot 1", xlab="X", ylab="Response 1", cex=2, col='black')#
+#
+q1lm1=lm(Y1~X1to3)#
+#
+abline(q1lm1, lwd=2, lty=2, col='blue')#
+#
+summary(q1lm1)#
+#
+plot(X1to3, Y2, pch=16, main="Plot 2", xlab="X", ylab="Response 2", cex=2, col='black')#
+#
+q1lm2=lm(Y2~X1to3)#
+#
+abline(q1lm2, lwd=2, lty=2, col='blue')#
+#
+summary(q1lm2)#
+#
+plot(X1to3, Y3, pch=16, main="Plot 3", xlab="X", ylab="Response 3", cex=2, col='black')#
+#
+q1lm3=lm(Y3~X1to3)#
+#
+abline(q1lm3, lwd=2, lty=2, col='blue')#
+#
+summary(q1lm3)
+Make the anova tables#
+anova(q1lm1)#
+anova(q1lm2)#
+anova(q1lm3)
+pf(22, 1, 16)
+1-pf(22, 1, 16)
+qf(0.95, 1, 16)
+detach(a1q1)
+gala=read.csv(file.choose())
+summary(gala)
+plot(NoSpp~Area)
+attach(gala)
+plot(NoSpp~Area)
+par(mfrow=c(1,1))#
+plot(NoSpp~Area, pch=16, cex=2)
+plot(NoSpp~Area, pch=16, cex=2, col='#02233322')
+plot(NoSpp~Area, pch=16, cex=2, col='#02233355')
+galalm1 = lm(NoSpp, Area)
+abline(galalm1, lwd = 2, col='blue', lty=2)
+galalm1 = lm(NoSpp, Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 2, col='blue', lty=2)
+galalm1 = lm(NoSpp~Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 2, col='blue', lty=2)
+abline(galalm1, lwd = 3, col='blue', lty=5)
+plot(NoSpp~Area, pch=16, cex=2, col='#02233355')#
+galalm1 = lm(NoSpp~Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 3, col='blue', lty=5)
+plot(NoSpp~log10(Area), pch=16, cex=2, col='#02233355')
+galalm2 = lm(NoSpp~log10(Area))
+summary(galalm2)
+library(xtable)
+xtable(galalm2)
+logArea = log10(Area)#
+logNoSpp = log10(NoSpp)
+par(mfrow=c(2,2))#
+plot(NoSpp~Area, pch=16, cex=2, col='#02233355')#
+galalm1 = lm(NoSpp~Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 3, col='blue', lty=5)#
+plot(NoSpp~log10(Area), pch=16, cex=2, col='#02233355')#
+galalm2 = lm(NoSpp~log10(Area))#
+summary(galalm2)#
+#
+logArea = log10(Area)#
+logNoSpp = log10(NoSpp)#
+#
+plot(NoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm2 = lm(NoSpp~logArea)#
+summary(galalm2)#
+abline(galalm2, lwd = 3, col='blue', lty=5)#
+#
+plot(logNoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm1 = lm(logNoSpp~logArea)#
+summary(galalm3)#
+abline(galalm3, lwd = 3, col='blue', lty=5)
+par(mfrow=c(2,2))#
+plot(NoSpp~Area, pch=16, cex=2, col='#02233355')#
+galalm1 = lm(NoSpp~Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 3, col='blue', lty=5)#
+plot(NoSpp~log10(Area), pch=16, cex=2, col='#02233355')#
+galalm2 = lm(NoSpp~log10(Area))#
+summary(galalm2)#
+#
+logArea = log10(Area)#
+logNoSpp = log10(NoSpp)#
+#
+plot(NoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm2 = lm(NoSpp~logArea)#
+summary(galalm2)#
+abline(galalm2, lwd = 3, col='blue', lty=5)#
+#
+plot(logNoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm3 = lm(logNoSpp~logArea)#
+summary(galalm3)#
+abline(galalm3, lwd = 3, col='blue', lty=5)
+par(mfrow=c(2,2))#
+plot(NoSpp~Area, pch=16, cex=2, col='#02233355')#
+galalm1 = lm(NoSpp~Area)#
+summary(galalm1)#
+abline(galalm1, lwd = 3, col='blue', lty=5)#
+#
+logArea = log10(Area)#
+logNoSpp = log10(NoSpp)#
+#
+plot(NoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm2 = lm(NoSpp~logArea)#
+summary(galalm2)#
+abline(galalm2, lwd = 3, col='blue', lty=5)#
+#
+plot(logNoSpp~logArea, pch=16, cex=2, col='#02233355')#
+galalm3 = lm(logNoSpp~logArea)#
+summary(galalm3)#
+abline(galalm3, lwd = 3, col='blue', lty=5)
+anova(galalm3)
+qt(.025, 28)
+qt(.975, 28)
+AreaAdjacent
+logAA=log10(AreaAdjacent)
+logAA=log10(AreaAdjacent)#
+plot(logNoSpp~logAA, pch=16, cex=2, col='#02233355')#
+galalm4 = lm(logNoSpp~logAA)#
+summary(galalm4)#
+abline(galalm4, lwd = 3, col='blue', lty=5)
+pt(0.56,28)
+pt(0.59,28)
+(0.053 - 0) / 0.08981
+pt(0.5901347,28)
+(1-pt(0.5901347,28))*2
+bears = read.csv(file.choose())
+summary(bears)
+pairs(bears[,5:10])
+detach(gala)
+attach(bears)
+plot(Weight~Chest.G, pch=Sex)
+par(mfrow=c(1,1))#
+plot(Weight~Chest.G, pch=Sex)
+plot(Weight~Chest.G, col=Sex)
+plot(Weight~Chest.G, col=Sex, pch=16)
+bearslm1=lm(Weight~Chest.G+Head.L)
+summary(bearslm1)
+anova(bearslm1)
+bearslm2=lm(Weight~Chest.G+Head.L+Head.W+Neck.G+Length)#
+summary(bearslm2)
+bearslm3=lm(Weight~Chest.G)#
+summary(bearslm3)
+summary(bearslm1)
+summary(bearslm3)#
+anova(bearslm3)
+predict(bearslm3, list('Chest.G'=c(35, 50)), "confidence")
+predict(bearslm3, list('Chest.G'=c(35, 50)), interval="confidence", 0.95)
+summary(bearslm3)#
+anova(bearslm3)
+mean(Chest.G)
+predict(bearslm3, list('Chest.G'=c(35, 50)), interval="confidence", 0.95)
+predict(bearslm3, list('Chest.G'=c(35, 50)), interval="prediction", 0.95)
+sokal = read.csv(file.choose())
+summary(sokal)
+par(mfrow=c(1,3))
+detach(bears)
+attach(sokal)
+X2 = X^2#
+X3 = X^3
+X3
+X2
+lm1=lm(Y~X)#
+lm2=lm(Y~X+X2)#
+lm3=lm(Y~X+X2+X3)
+abline(lm1, lwd=2, col=blue)
+plot(Y~X, pch=16, cex=2)#
+abline(lm1, lwd=2, col=blue)
+plot(Y~X, pch=16, cex=2)#
+abline(lm1, lwd=2, col='blue')
+par(mfrow=c(2,2))#
+#
+plot(Y~X, pch=16, cex=2)#
+abline(lm1, lwd=2, col='blue')
+summary(lm2)
+lm2$estimates
+lm2$coef
+lm2$coef[1]
+plot_lm2=function(x){lm2$coef[1] + lm2$coef[2]*x +lm2$coef[3]*(x^2)}
+plot_lm2(c(10, 15, 0, 1))
+plot(Y~X, pch=16, cex=2)#
+summary(lm2)#
+plot_lm2=function(x){lm2$coef[1] + lm2$coef[2]*x +lm2$coef[3]*(x^2)}#
+#
+# Lines function will connect lists of x,y coordinates into a line...#
+lines(x=seq(from=0, to=70, by=0.1), y=plot_lm2(seq(from=0, to=70, by=0.1)), lwd=2, col='blue')
+lm3=lm(Y~X+X2+X3)
+plot(Y~X, pch=16, cex=2)#
+summary(lm3)#
+plot_lm3=function(x){lm3$coef[1] + lm3$coef[2]*x +lm3$coef[3]*(x^2)+lm3$coef[4]*(x^3)}#
+#
+lines(x=seq(from=0, to=70, by=0.1), y=plot_lm3(seq(from=0, to=70, by=0.1)), lwd=2, col='blue')
+sd(c(1,4,6,8))
+mean(c(1,4,6,8))
+8-4.75
+3.25/2.98
+x = c(10, 15, 18, 21, 24, 29, 32, 33)
+mean(x)
+x-mean(x)
+(x-mean(x))^2
+sum((x-mean(x))^2)
+sum((x-mean(x))^2)/8
+var(x)
+sum((x-mean(x))^2)/7
+trees=rnorm(100000,2,1)
+hist(trees)
+samplemeans=numeric(1000)
+samplemeans=numeric(1000)#
+for(i in 1:1000)#
+{#
+samplemeans[i]=sample(trees, 100, replace=FALSE)	#
+}
+samplemeans=numeric(1000)#
+for(i in 1:1000)#
+{#
+samplemeans[i]=mean(sample(trees, 100, replace=FALSE))#
+}
+par(mfrow=c(2,1))#
+hist(trees)#
+hist(samplemeans)
+sd(samplemeans)
+1/sqrt(100)
+1/175223510
+120/2.1e10
+479001600/86400
+12!
+factorial(12)
+factorial(12)/(factorial(4)*factorial(5)*factorial(3))
+(factorial(4)*factorial(5)*factorial(3))
+3295/12376
+204/659
+11*10*9
+50*49*48
+990/117600
+.1648+.0735
+33/3920
+3295/12376
+204/659
+choose(10,2)*choose(5,1)/choose(15,3)
+choose(10,2)*choose(5,1)*(1/6)/choose(15,3)
+choose(10,2)*choose(5,1)*(1/3)/choose(15,3)
+165/19600
+lineman=c(338, 324, 325, 304, 344, 315, 304, 319, 318)
+mean(lineman)
+lineman-mean(lineman)
+(lineman-mean(lineman))^2
+sum((lineman-mean(lineman))^2)
+sum((lineman-mean(lineman))^2)/(9-1)
+sqrt(sum((lineman-mean(lineman))^2)/(9-1))
+x=c(305, 325, 305, 300, 285, 280, 298)
+sd(x)
+mean(x)
+x=c(29.68, 29.87, 30.16, 30.22, 30.48, 30.65, 30.9)
+y=c(2.63, 2.58, 2.6, 2.48, 2.26, 2.38, 2.26)
+mean(x)
+x-mean(x)
+(x-mean(x))^2
+sum((x-mean(x))^2)
+sum((x-mean(x))^2)/(7-1)
+sqrt(sum((x-mean(x))^2)/(7-1))
+sd(x)
+sd(y)
+mean(x)
+mean(y)
+(y-mean(y))/sd(y)
+(x-mean(x))/sd(x)
+((y-mean(y))/sd(y)) * ((x-mean(x))/sd(x))
+sum(((y-mean(y))/sd(y)) * ((x-mean(x))/sd(x)))
+plot(x,y)
+abline(lm(y~x))
+3295/99008
+30*9*5
+6*8*15*14*13
+1350/131040
+(1350/131040)/(3295/99008)
+((1/6)*(3/8)*(10/15)*(9/14)*(5/13))
+9/182
+33/3920
+3295/12376
+204/659
+0.89*3
+990/117600
+11*10*9/(50*49*48)
+10*9/(15*14*6)
+33/3920
+25/136
+3295/12376
+10336/3295
+3295/12376
+36*91*68
+6*91
+15/(546)
+(15/(546)) + (25/(6*68))
+0.08874704
+0.08874704*3
+33/3920
+1315/4914
+27/526
+Read in data#
+harvest1=read.csv("/Users/justin/Dropbox/Projects/[reference] 2013 TAC Analysis/00 Data/Output Data/2012_Harvest_data_All.csv")#
+harvest=harvest1#
+# For effort standardization use a GLM for catch, assume residuals are due to changes in abundance, assume fitted values are standardized effort
+Clean Gear type data#
+# Fix typos in Gill Net indicator#
+unique(harvest$GRTP)#
+harvest[harvest$GRTP=='GI' | harvest$GRTP=='Gl',]$GRTP = "GL"#
+#
+# Remove rarely used gear type "LI" (2 observations)#
+harvest=harvest[-(which(harvest$GRTP=='LI')),]#
+#
+# Remove rarely used gear type "SE" (4 observations)#
+harvest=harvest[-(which(harvest$GRTP=='SE')),]#
+#
+# Remaining gear types are GL, PD, and TP with 138233, 247, and 6244 observations respectively#
+summary(harvest)#
+#
+# Remove harvest events with durations <6hrs and >96hrs#
+# harvest=harvest[-(which(harvest$EFFORT < 6 | harvest$EFFORT > 168hrs)),]#
+#
+# Correct mesh size measurements... i.e. convert mm to cms#
+unique(harvest$MESH)#
+harvest[which(harvest$MESH > 100),]$MESH = harvest[which(harvest$MESH > 100),]$MESH/100#
+unique(harvest$MESH)#
+#
+# Set up standardized effort columns#
+# First for not accounting for gear type#
+harvest$Std_Effort1=numeric(dim(harvest)[1])#
+#
+# Second for when gear type is considered#
+harvest$Std_Effort2=numeric(dim(harvest)[1])#
+#
+# GL has variables which other methods do not have (mesh and length)... standardize into single effort measure, first#
+# So that we have the same number of residuals and GL events, use median for NaN values#
+harvest[which(harvest$GRTP=='GL' & is.na(harvest$MESH)),]$MESH = median(harvest[which(harvest$GRTP=='GL'),]$MESH, na.rm=TRUE)#
+harvest[which(harvest$GRTP=='GL' & is.na(harvest$EFFDST5)),]$EFFDST5 = median(harvest[which(harvest$GRTP=='GL'),]$EFFDST5, na.rm=TRUE)#
+#
+# Consider that effort duration may be more quadractic (i.e. too long is ineffective)... add a effort^2 column for this#
+harvest$EFFORT2 = (harvest$EFFORT)^2#
+#
+lm_GL=lm(harvest[harvest$GRTP=='GL',]$HVSWT~harvest[harvest$GRTP=='GL',]$EFFDST5 + harvest[harvest$GRTP=='GL',]$EFFORT + harvest[harvest$GRTP=='GL',]$MESH + harvest[harvest$GRTP=='GL',]$EFFORT2)#
+#
+harvest[harvest$GRTP=='GL',]$Std_Effort1=lm_GL$fitted.values#
+#
+# Stardize effort duration for other two methods...#
+# The effort is always the same for geartype PD...#
+lm_pd = lm(harvest[harvest$GRTP=='PD',]$HVSWT~ harvest[harvest$GRTP=='PD',]$EFFORT + harvest[harvest$GRTP=='PD',]$EFFORT2)#
+harvest[harvest$GRTP=='PD',]$Std_Effort1=lm_pd$fitted.values#
+#
+lm_tp = lm(harvest[harvest$GRTP=='TP',]$HVSWT~ harvest[harvest$GRTP=='TP',]$EFFORT + harvest[harvest$GRTP=='TP',]$EFFORT2)#
+harvest[harvest$GRTP=='TP',]$Std_Effort1=lm_tp$fitted.values#
+#
+# Now standardize based on method...#
+lm_grtp=lm(harvest$HVSWT~harvest$GRTP+harvest$Std_Effort1)#
+harvest$Std_Effort2=lm_grtp$fitted.values
+plot(harvest$HVSWT~harvest$Std_Effort2)
+harvest$Std_CPUE=harvest$HVSWT/harvest$Std_Effort2
+summary(harvest)
+?aggregate
+varsummary=aggregate(harvest$Std_CPUE, by=list(harvest$GRID, harvest$YEAR), FUN="var")
+varsummary
+variance_summary=aggregate(harvest$Std_CPUE, by=list(harvest$GRID, harvest$YEAR), FUN="var")#
+mean_summary=aggregate(harvest$Std_CPUE, by=list(harvest$GRID, harvest$YEAR), FUN="mean")
+hist(variance_summary$x)
+max(variance_summary$x)
+max(variance_summary$x, na.rm=TRUE)
+setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM")
+hgrid=read.csv(Huron_Grids.csv, header=F)
+setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM/")
+hgrid=read.csv(Huron_Grids.csv, header=F)
+?setwd
+getwd
+getwd()
+hgrid=read.csv("Huron_Grids.csv", header=F)
+summary(hgrid)
+dim(hgrid)
+hgrid[hgrid>0]
+hgrid==101
+hgrid>101
+hgrid>1
+hgrid[hgrid>1]=0
+hgrid
+hgrid[is.na(hgrid)]=-1
+hgrid
+write.csv(hgrid, "Blank_Huron.csv", row.names=FALSE, col.names=FALSE)
+write.table(hgrid, "Blank_Huron.csv", row.names=FALSE, col.names=FALSE, sep=",")
+hgrid=read.csv("Blank_Huron.csv", header=F)
+cbind(-1, hgrid, -1)
+hgrid=rbind(-1, hgrid, -1)
+for(i in 2:(dim(hgrid)[1]-1))#
+	{#
+	for(j in 2:(dim(hgrid)[2]-1))#
+		{#
+		if(hgrid[i,j] == 0 | hgrid[i-1,j] == -1 | hgrid[i+1,j] == -1 | hgrid[i,j-1] == -1 | hgrid[i,j+1] == -1){hgrid[i,j] = 1}	#
+		}	#
+	}
+hgrid
+hgrid=read.csv("Blank_Huron.csv", header=F)#
+hgrid=cbind(-1, hgrid, -1)#
+hgrid=rbind(-1, hgrid, -1)#
+#
+for(i in 2:(dim(hgrid)[1]-1))#
+	{#
+	for(j in 2:(dim(hgrid)[2]-1))#
+		{#
+		if(hgrid[i,j] == 0 & (hgrid[i-1,j] == -1 | hgrid[i+1,j] == -1 | hgrid[i,j-1] == -1 | hgrid[i,j+1] == -1)){hgrid[i,j] = 1}	#
+		}	#
+	}
+hgrid
+for(i in 2:(dim(hgrid)[1]-1))#
+	{#
+	for(j in 2:(dim(hgrid)[2]-1))#
+		{#
+		if(hgrid[i,j] == 0 & (hgrid[i-1,j] == 1 | hgrid[i+1,j] == 1 | hgrid[i,j-1] == 1 | hgrid[i,j+1] == 1)){hgrid[i,j] = 2}	#
+		}	#
+	}
+hgrid
+Everything else, give it a 3.#
+for(i in 2:(dim(hgrid)[1]-1))#
+	{#
+	for(j in 2:(dim(hgrid)[2]-1))#
+		{#
+		if(hgrid[i,j] == 0){hgrid[i,j] = 3}	#
+		}	#
+	}
+hgrid[hgrid==-1]=NULL
+hgrid[hgrid==-1]=NA
+hgrid
+write.table(hgrid, "Habitat.csv", row.names=F, col.names=F, sep=",")
+hgrid[hgrid>0]=0
+write.table(hgrid, "Blank.csv", row.names=F, col.names=F, sep=",")
+hgrid
+hgrid[25, 34]
+hgrid[25, 34]=1
+hgrid
+hgrid2=hgrid
+hgrid2[0]=NA
+hgrid2[hgrid2==0]=NA
+write.table(hgrid2, "Anthro.csv", row.names=F, col.names=F, sep=",")
+hgrid[25, 34]=0
