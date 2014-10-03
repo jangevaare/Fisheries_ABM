@@ -16,18 +16,23 @@
 ###########################################################
 # INITIALIZATION - LIBRARIES, PATHS, REQUIRED DATA
 ###########################################################
-setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM/")
-
 library(reshape)
 
-spawning = read.csv("masks/spawning.csv", header=T)
+setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM/")
 
-
-
+# Spawning map
+spawning_map = as.matrix(read.csv("masks/spawning.csv", header=F))
+colnames(spawning_map) = NULL
+spawning_melt = melt(spawning_map)
+spawning_melt=spawning_melt[(is.na(spawning_melt$value)==FALSE),]
 
 ###########################################################
 # SPAWNING (LIST OF BROOD SIZEs, SPAWNING MAP)
 ###########################################################
+spawning=function(initial, broods, spawning_map)
+	{
+	
+	}
 
 
 ###########################################################
