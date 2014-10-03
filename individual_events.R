@@ -31,12 +31,21 @@ spawning_melt=spawning_melt[(is.na(spawning_melt$value)==FALSE),]
 habitat_map = as.matrix(read.csv("masks/habitat.csv", header=F))
 colnames(habitat_map) = NULL
 habitat_melt = melt(habitat_map)
-rownames(habitat_melt)
 habitat_melt=habitat_melt[(is.na(habitat_melt$value)==FALSE),]
+
+# Anthropogenic effect map
+anthro_map = as.matrix(read.csv("masks/anthro.csv", header=F))
+colnames(anthro_map) = NULL
+anthro_melt = melt(anthro_map)
+anthro_melt=anthro_melt[(is.na(anthro_melt$value)==FALSE),]
 
 # Natural mortality assumptions by habitat preferability
 # 1, 2, and 3
 nat_mortality_rates = c(0.1, 0.2, 0.4)
+
+# Additional mortality in the presence and absence of 
+# anthropogenic impact
+anthro_mortality_rate = c(0, 0.2)
 
 ###########################################################
 # SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
@@ -80,7 +89,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 # NATURAL MORTALITY (LOCATION, STAGE)
 ###########################################################
 
-natmortality=function(event_db, habitat_melt, time, nat_mortality_rates)
+nat+mortality=function(event_db, habitat_melt, time, nat_mortality_rates)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
@@ -111,6 +120,34 @@ natmortality=function(event_db, habitat_melt, time, nat_mortality_rates)
 ###########################################################
 # OTHER ANTHROPOGENIC MORTALITY (LOCATION, STAGE)
 ###########################################################
+
+anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
+	{
+	# Load in latest portion of `event_db`
+	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
+	                        (event_db$change_id==max(event_db$change_id)),]
+	
+	# Determine location 
+	anthro_fun=function(location_id){
+		anthro_melt$value[rownames(anthro_melt)==location_id]}
+	
+	# Link location to special mortality rates
+	mortality_rate=anthro_mortality_rates[sapply(sub_event_db$location_id, preferability_fun)]
+	
+	# Probabilistically cause death within each brood
+	binomial_death=function(x){
+		rbinom(1, sub_event_db$num_alive[x], mortality_rate[x])}
+	
+	deaths=sapply(1:length(mortality_rate), FUN = binomial_death)
+	
+	# Prepare to update `event_db`
+	sub_event_db$num_alive = sub_event_db$num_alive - deaths
+	sub_event_db$num_anthro_death = sub_event_db$num_anthro_death + deaths
+	sub_event_db$change_id = sub_event_db$change_id + 1
+	sub_event_db$time = time
+	
+	rbind(event_db, sub_event_db)
+	}
 
 ###########################################################
 # STAGE ADVANCEMENT (STAGE, TIME)
