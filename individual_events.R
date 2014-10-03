@@ -63,7 +63,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 		data.frame('agent_id'=1:length(eggs),
 				   'change_id'=1,
 				   'time'=time, 
-				   'stage'='egg',
+				   'stage'=as.vector(rep('egg', length(eggs))),
 				   'location_id'=rownames(spawning_melt)[site_assignment], 
 				   'location_x'=spawning_melt$X2[site_assignment], 
 				   'location_y'=spawning_melt$X1[site_assignment],
@@ -76,7 +76,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 		data.frame('agent_id'=(max(event_db$agent_id)+1):(max(event_db$agent_id)+length(eggs)),
 				   'change_id'=max(event_db$change_id)+1,
 				   'time'=time,
-		 		   'stage'='egg',
+		 		   'stage'=as.vector(rep('egg', length(eggs))),
 		 		   'location_id'=rownames(spawning_melt)[site_assignment],
 				   'location_x'=spawning_melt$X2[site_assignment], 
 				   'location_y'=spawning_melt$X1[site_assignment],
@@ -150,13 +150,39 @@ anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
 	}
 
 ###########################################################
-# STAGE ADVANCEMENT (STAGE, TIME)
+# STAGE ADVANCEMENT FUNCTIONS
 ###########################################################
+
+egg_to_larvae=function(event_db, time)
+	{
+	# Load in latest portion of `event_db`
+	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
+	                        (event_db$change_id==max(event_db$change_id)),]
+
+	# Update `event_db`
+	sub_event_db$stage=as.vector(sub_event_db$stage)
+	sub_event_db$stage[sub_event_db$stage == 'egg']='larvae'
+	sub_event_db$change_id = sub_event_db$change_id + 1
+	sub_event_db$time = time
+	
+	rbind(event_db, sub_event_db)
+	}
+
+larvae_to_juvenile=function(event_db, time)
+	{
+	# Load in latest portion of `event_db`
+	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
+	                        (event_db$change_id==max(event_db$change_id)),]
+
+	# Update `event_db`
+	sub_event_db$stage=as.vector(sub_event_db$stage)
+	sub_event_db$stage[sub_event_db$stage == 'larvae']='juvenile'
+	sub_event_db$change_id = sub_event_db$change_id + 1
+	sub_event_db$time = time
+	
+	rbind(event_db, sub_event_db)
+	}
 
 ###########################################################
 # MOVEMENT (LOCATION, STAGE)
-###########################################################
-
-###########################################################
-# ADVANCE TIME (EVENT DATABASE)
 ###########################################################
