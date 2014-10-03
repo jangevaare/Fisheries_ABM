@@ -14,6 +14,23 @@
 ###########################################################
 
 ###########################################################
+# INITIALIZATION - LIBRARIES, PATHS, REQUIRED DATA
+###########################################################
+setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM/")
+
+library(reshape)
+
+spawning = read.csv("masks/spawning.csv", header=T)
+
+
+
+
+###########################################################
+# SPAWNING (LIST OF BROOD SIZEs, SPAWNING MAP)
+###########################################################
+
+
+###########################################################
 # NATURAL MORTALITY (LOCATION, STAGE)
 ###########################################################
 
