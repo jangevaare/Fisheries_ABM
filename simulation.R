@@ -105,8 +105,7 @@ for(w in (incubation+1):52){
 	event_db=nat_mortality(event_db, 'larvae', habitat_melt, t, larval_nat_mortality_rates)
 	event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)}
 
-# Harvest adults
-# simple with actual data, otherwise must simulate harvest...
+# Harvest adults here
 
 # Juveniles become adults...
 event_db=juvenile_to_adult(event_db, t)
@@ -137,7 +136,7 @@ for(t in 2:49){
 		event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)
 		event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rate)}
 
-	# Harvest adults
+	# Harvest adults here
 
 	event_db=juvenile_to_adult(event_db, t)
 	event_db=larvae_to_juvenile(event_db, t)

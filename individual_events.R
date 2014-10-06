@@ -142,7 +142,7 @@ larvae_to_juvenile=function(event_db, time)
 	sub_event_db$stage=as.vector(sub_event_db$stage)
 	sub_event_db$stage[sub_event_db$stage == 'larvae']='juvenile'
 	sub_event_db$change_id = sub_event_db$change_id + 1
-	sub_event_db$time = time
+	sub_event_db$time = time + 1 # Since this occurs at the end of each year...
 	
 	rbind(event_db, sub_event_db)
 	}
