@@ -14,42 +14,6 @@
 ###########################################################
 
 ###########################################################
-# INITIALIZATION - LIBRARIES, PATHS, REQUIRED DATA, &
-# ASSUMPTIONS
-###########################################################
-library(reshape)
-
-setwd("/Users/justin/Dropbox/Projects/[in progress] Fisheries ABM/")
-
-# Spawning map
-spawning_map = as.matrix(read.csv("masks/spawning.csv", header=F))
-colnames(spawning_map) = NULL
-spawning_melt = melt(spawning_map)
-spawning_melt=spawning_melt[(is.na(spawning_melt$value)==FALSE),]
-
-# Habitat preferability map
-habitat_map = as.matrix(read.csv("masks/habitat.csv", header=F))
-colnames(habitat_map) = NULL
-habitat_melt = melt(habitat_map)
-habitat_melt=habitat_melt[(is.na(habitat_melt$value)==FALSE),]
-
-# Anthropogenic effect map
-anthro_map = as.matrix(read.csv("masks/anthro.csv", header=F))
-colnames(anthro_map) = NULL
-anthro_melt = melt(anthro_map)
-anthro_melt=anthro_melt[(is.na(anthro_melt$value)==FALSE),]
-
-# Natural mortality assumptions by habitat preferability
-# 1, 2, and 3
-larval_nat_mortality_rates = c(0.2, 0.3, 0.5)
-juvenile_nat_mortality_rates = c(0.1, 0.2, 0.4)
-
-# Additional mortality in the presence and absence of 
-# anthropogenic impact
-larval_anthro_mortality_rate = c(0, 0.2)
-juvenile_anthro_mortality_rate = c(0, 0.2)
-
-###########################################################
 # SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
 ###########################################################
 
@@ -60,7 +24,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 	# Assign sites to `eggs`
 	site_assignment = apply((rmultinom(length(eggs), 1, rep(1/sites, sites)) == 1), 2, which)
 
-	# Output data.frame, event_db == NULL if new simulation
+	# Output data.frame, event_db == NA if new simulation
 	if(is.na(event_db)){
 		data.frame('agent_id'=1:length(eggs),
 				   'change_id'=1,
@@ -157,7 +121,7 @@ egg_to_larvae=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='egg')])),]
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='egg')]))),]
 	                        
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -172,7 +136,7 @@ larvae_to_juvenile=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='larvae')])),]
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='larvae')]))),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -187,7 +151,7 @@ juvenile_to_adult=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='juvenile')])),]
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='juvenile')]))),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
