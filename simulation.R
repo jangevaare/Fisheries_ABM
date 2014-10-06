@@ -107,9 +107,6 @@ for(w in (incubation+1):52){
 
 # Harvest adults here
 
-# Juveniles become adults...
-event_db=juvenile_to_adult(event_db, t)
-
 # Larvae become juveniles...
 event_db=larvae_to_juvenile(event_db, t)
 
