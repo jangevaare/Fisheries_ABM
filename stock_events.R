@@ -28,8 +28,8 @@ egg_production=function(Age_Matrix, prop_mature, egg_num, time){
 ###########################################################
 
 adult_update=function(Age_Matrix, survivorship, event_db, time){
-	Age_Matrix[, t+1] = c(event_db$num_alive[(event_db$time==time) & 
-	                     (event_db$stage=='adult'),],
+	Age_Matrix[, t+1] = c(sum(event_db$num_alive[(event_db$time==time) & 
+	                     (event_db$stage=='adult')]),
 	                    rbinom(1, Age_Matrix[1,t], survivorship[1]),
 						rbinom(1, Age_Matrix[2,t], survivorship[2]),
 						rbinom(1, Age_Matrix[3,t], survivorship[3]),
