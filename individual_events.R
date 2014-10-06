@@ -157,8 +157,8 @@ egg_to_larvae=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
-
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='egg')])),]
+	                        
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
 	sub_event_db$stage[sub_event_db$stage == 'egg']='larvae'
@@ -172,7 +172,7 @@ larvae_to_juvenile=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='larvae')])),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -187,7 +187,7 @@ juvenile_to_adult=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
+	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='juvenile')])),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
