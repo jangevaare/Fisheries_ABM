@@ -48,6 +48,7 @@ juvenile_nat_mortality_rates = c(0.1, 0.2, 0.4)
 # anthropogenic impact
 larval_anthro_mortality_rate = c(0, 0.2)
 juvenile_anthro_mortality_rate = c(0, 0.2)
+
 ###########################################################
 # SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
 ###########################################################
@@ -93,9 +94,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 	{
 	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)) & 
-	                        (event_db$stage==stage),]
+	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)])),]
 	
 	# Determine habitat preferability
 	preferability_fun=function(location_id){
@@ -126,9 +125,7 @@ nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
 	{
 	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)) & 
-	                        (event_db$stage==stage),]
+	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)])),]
 	                        	
 	# Determine location 
 	anthro_fun=function(location_id){
@@ -159,8 +156,8 @@ anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
 egg_to_larvae=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
-	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)),]
+	sub_event_db = event_db[(event_db$time==time & 
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -174,8 +171,8 @@ egg_to_larvae=function(event_db, time)
 larvae_to_juvenile=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
-	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)),]
+	sub_event_db = event_db[(event_db$time==time & 
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -189,8 +186,8 @@ larvae_to_juvenile=function(event_db, time)
 juvenile_to_adult=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
-	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)),]
+	sub_event_db = event_db[(event_db$time==time & 
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
