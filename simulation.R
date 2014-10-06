@@ -94,22 +94,19 @@ event_db=spawning(eggs, spawning_melt, t, NA)
 
 # Weekly mortality and movement
 for(w in 1:incubation){
-	event_db=nat_mortality(event_db, 'eggs', habitat_melt, t, egg_nat_mortality_rates)
-	event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, larval_nat_mortality_rates)
-	event_db=anthro_mortality(event_db, 'eggs', anthro_melt, t, egg_anthro_mortality_rates)
-	event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rates)}
+	event_db=nat_mortality(event_db, 'egg', habitat_melt, t, egg_nat_mortality_rates)
+	event_db=anthro_mortality(event_db, 'egg', anthro_melt, t, egg_anthro_mortality_rate)
+	}
 
 # Eggs hatch...
 event_db=egg_to_larvae(event_db, t)
 
 for(w in (incubation+1):52){
 	event_db=nat_mortality(event_db, 'larvae', habitat_melt, t, larval_nat_mortality_rates)
-	event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, juvenile_nat_mortality_rates)
-	event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rates)
-	event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rates)}
+	event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)}
 
 # Harvest adults
-# to be completed
+# simple with actual data, otherwise must simulate harvest...
 
 # Juveniles become adults...
 event_db=juvenile_to_adult(event_db, t)
@@ -120,3 +117,28 @@ event_db=larvae_to_juvenile(event_db, t)
 # Insert 'new' adults into age-structured model, and
 # age surviving adults
 Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)
+
+# Now loop for remainder of the simulation
+for(t in 2:49){
+	eggs = egg_production(Age_Matrix, prop_mature, egg_num, t)	
+	event_db=spawning(eggs, spawning_melt, t, event_db)	
+
+	for(w in 1:incubation){
+		event_db=nat_mortality(event_db, 'eggs', habitat_melt, t, egg_nat_mortality_rates)
+		event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, larval_nat_mortality_rates)
+		event_db=anthro_mortality(event_db, 'eggs', anthro_melt, t, egg_anthro_mortality_rate)
+		event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rate)}
+
+	event_db=egg_to_larvae(event_db, t)
+
+	for(w in (incubation+1):52){
+		event_db=nat_mortality(event_db, 'larvae', habitat_melt, t, larval_nat_mortality_rates)
+		event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, juvenile_nat_mortality_rates)
+		event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)
+		event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rate)}
+
+	# Harvest adults
+
+	event_db=juvenile_to_adult(event_db, t)
+	event_db=larvae_to_juvenile(event_db, t)
+	Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)}

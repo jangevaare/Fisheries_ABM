@@ -86,7 +86,7 @@ nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 # OTHER ANTHROPOGENIC MORTALITY (LOCATION, STAGE)
 ###########################################################
 
-anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
+anthro_mortality=function(event_db, stage, anthro_melt, time, anthro_mortality_rates)
 	{
 	# Load in latest portion of `event_db` specific to `stage`
 	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)])),]
