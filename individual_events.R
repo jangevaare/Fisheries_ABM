@@ -41,12 +41,13 @@ anthro_melt=anthro_melt[(is.na(anthro_melt$value)==FALSE),]
 
 # Natural mortality assumptions by habitat preferability
 # 1, 2, and 3
-nat_mortality_rates = c(0.1, 0.2, 0.4)
+larval_nat_mortality_rates = c(0.2, 0.3, 0.5)
+juvenile_nat_mortality_rates = c(0.1, 0.2, 0.4)
 
 # Additional mortality in the presence and absence of 
 # anthropogenic impact
-anthro_mortality_rate = c(0, 0.2)
-
+larval_anthro_mortality_rate = c(0, 0.2)
+juvenile_anthro_mortality_rate = c(0, 0.2)
 ###########################################################
 # SPAWNING (LIST OF BROOD SIZES, SPAWNING MAP)
 ###########################################################
@@ -89,11 +90,12 @@ spawning=function(eggs, spawning_melt, time, event_db){
 # NATURAL MORTALITY (LOCATION, STAGE)
 ###########################################################
 
-nat+mortality=function(event_db, habitat_melt, time, nat_mortality_rates)
+nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 	{
-	# Load in latest portion of `event_db`
+	# Load in latest portion of `event_db` specific to `stage`
 	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)),]
+	                        (event_db$change_id==max(event_db$change_id)) & 
+	                        (event_db$stage==stage),]
 	
 	# Determine habitat preferability
 	preferability_fun=function(location_id){
@@ -123,10 +125,11 @@ nat+mortality=function(event_db, habitat_melt, time, nat_mortality_rates)
 
 anthro_mortality=function(event_db, anthro_melt, time, anthro_mortality_rates)
 	{
-	# Load in latest portion of `event_db`
+	# Load in latest portion of `event_db` specific to `stage`
 	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
-	                        (event_db$change_id==max(event_db$change_id)),]
-	
+	                        (event_db$change_id==max(event_db$change_id)) & 
+	                        (event_db$stage==stage),]
+	                        	
 	# Determine location 
 	anthro_fun=function(location_id){
 		anthro_melt$value[rownames(anthro_melt)==location_id]}
@@ -177,6 +180,21 @@ larvae_to_juvenile=function(event_db, time)
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
 	sub_event_db$stage[sub_event_db$stage == 'larvae']='juvenile'
+	sub_event_db$change_id = sub_event_db$change_id + 1
+	sub_event_db$time = time
+	
+	rbind(event_db, sub_event_db)
+	}
+
+juvenile_to_adult=function(event_db, time)
+	{
+	# Load in latest portion of `event_db`
+	sub_event_db = event_db[(event_db$time==max(event_db$time)) & 
+	                        (event_db$change_id==max(event_db$change_id)),]
+
+	# Update `event_db`
+	sub_event_db$stage=as.vector(sub_event_db$stage)
+	sub_event_db$stage[sub_event_db$stage == 'juvenile']='adult'
 	sub_event_db$change_id = sub_event_db$change_id + 1
 	sub_event_db$time = time
 	
