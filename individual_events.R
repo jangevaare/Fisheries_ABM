@@ -96,7 +96,7 @@ anthro_mortality=function(event_db, stage, anthro_melt, time, anthro_mortality_r
 		anthro_melt$value[rownames(anthro_melt)==location_id]}
 	
 	# Link location to special mortality rates
-	mortality_rate=anthro_mortality_rates[sapply(sub_event_db$location_id, preferability_fun)]
+	mortality_rate=anthro_mortality_rates[sapply(sub_event_db$location_id, anthro_fun)]
 	
 	# Probabilistically cause death within each brood
 	binomial_death=function(x){
