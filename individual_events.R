@@ -52,22 +52,25 @@ spawning=function(eggs, spawning_melt, time, event_db){
 		 		   'num_anthro_death'=0))}}
 	
 ###########################################################
-# NATURAL MORTALITY (LOCATION, STAGE)
+# NATURAL MORTALITY
 ###########################################################
 
-nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
-	{
-	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)]) & event_db$time==time & event_db$stage==stage),]
+nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
+	# Load in latest portion of `event_db`, the last changed
+	# at the specified time
+	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
 	
-	# Determine habitat preferability
+	# Define a habitat preferability determining function
 	preferability_fun=function(location_id){
-		habitat_melt$value[rownames(habitat_melt)==location_id]}
+		habitat_melt$value[rownames(habitat_melt)==location_id]
+		}
 	
-	# Link habitat preferability to natural mortality rates
-	mortality_rate=nat_mortality_rates[sapply(sub_event_db$location_id, preferability_fun)]
-	
-	# Probabilistically cause death within each brood
+	# Link agents to mortality rates specific to location
+	# and stage
+	mortality_rate=nat_mortality_rates[[c('egg', 'larvae', 'juvenile')==sub_event_db$stage]][sapply(sub_event_db$location_id, preferability_fun)]
+
+	# Define a function to probabilistically cause death 
+	# within each brood (agent)
 	binomial_death=function(x){
 		rbinom(1, sub_event_db$num_alive[x], mortality_rate[x])}
 	
