@@ -24,20 +24,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 	# Assign sites to `eggs`
 	site_assignment = apply((rmultinom(length(eggs), 1, rep(1/sites, sites)) == 1), 2, which)
 
-	# Output data.frame, event_db == NA if new simulation
-	if(is.na(event_db)){
-		data.frame('agent_id'=1:length(eggs),
-				   'change_id'=1,
-				   'time'=time, 
-				   'stage'=as.vector(rep('egg', length(eggs))),
-				   'location_id'=rownames(spawning_melt)[site_assignment], 
-				   'location_x'=spawning_melt$X2[site_assignment], 
-				   'location_y'=spawning_melt$X1[site_assignment],
-				   'birth_d'=time, 
-				   'num_alive'=eggs, 
-				   'num_natural_death'=0, 
-				   'num_anthro_death'=0)}
-	else{
+	if(is.data.frame(event_db)){
 		rbind(event_db,
 		data.frame('agent_id'=(max(event_db$agent_id)+1):(max(event_db$agent_id)+length(eggs)),
 				   'change_id'=max(event_db$change_id)+1,
@@ -49,7 +36,19 @@ spawning=function(eggs, spawning_melt, time, event_db){
 		 		   'birth_d'=time, 
 		 		   'num_alive'=eggs, 
 		 		   'num_natural_death'=0, 
-		 		   'num_anthro_death'=0))}}
+		 		   'num_anthro_death'=0))}
+	else{
+		data.frame('agent_id'=1:length(eggs),
+				   'change_id'=1,
+				   'time'=time, 
+				   'stage'=as.vector(rep('egg', length(eggs))),
+				   'location_id'=rownames(spawning_melt)[site_assignment], 
+				   'location_x'=spawning_melt$X2[site_assignment], 
+				   'location_y'=spawning_melt$X1[site_assignment],
+				   'birth_d'=time, 
+				   'num_alive'=eggs, 
+				   'num_natural_death'=0, 
+				   'num_anthro_death'=0)}}
 	
 ###########################################################
 # NATURAL MORTALITY
