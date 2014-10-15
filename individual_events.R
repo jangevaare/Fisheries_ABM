@@ -60,14 +60,26 @@ nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
 	# at the specified time
 	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
 	
-	# Define a habitat preferability determining function
-	preferability_fun=function(location_id){
-		habitat_melt$value[rownames(habitat_melt)==location_id]
+	rate_link_fun = function(mortality_rates, melt, event_db){
+		which_stage_fun = function(stage){
+			which(c('egg', 'larvae', 'juvenile') == stage)
+			}
+		
+		which_rate_fun = function(location_id){
+			melt$value[rownames(melt)==location_id]
+			}
+		
+		rate_num = sapply(event_db$location_id, which_rate_fun)
+		stage_num = sapply(event_db$stage, which_stage_fun)
+				
+		rate_link_helper_fun = function(i){			
+			mortality_rates[[rate_num[i]]][stage_num[i]]
+			}
+			
+		sapply(1: length(rate_num), rate_link_helper_fun)
 		}
-	
-	# Link agents to mortality rates specific to location
-	# and stage
-	mortality_rate=nat_mortality_rates[[c('egg', 'larvae', 'juvenile')==sub_event_db$stage]][sapply(sub_event_db$location_id, preferability_fun)]
+		
+	mortality_rate = rate_link_fun(nat_mortality_rates, habitat_melt, sub_event_db)
 
 	# Define a function to probabilistically cause death 
 	# within each brood (agent)
@@ -94,14 +106,29 @@ anthro_mortality=function(event_db, habitat_melt, time, anthro_mortality_rates){
 	# at the specified time
 	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
 	
-	# Define a habitat preferability determining function
-	anthro_fun=function(location_id){
-		anthro_melt$value[rownames(anthro_melt)==location_id]
-		}
-	
 	# Link agents to mortality rates specific to location
 	# and stage
-	mortality_rate=anthro_mortality_rates[[c('egg', 'larvae', 'juvenile')==sub_event_db$stage]][sapply(sub_event_db$location_id, anthro_fun)]
+	
+	rate_link_fun = function(mortality_rates, melt, event_db){
+		which_stage_fun = function(stage){
+			which(c('egg', 'larvae', 'juvenile') == stage)
+			}
+		
+		which_rate_fun = function(location_id){
+			melt$value[rownames(melt)==location_id]
+			}
+		
+		rate_num = sapply(event_db$location_id, which_rate_fun)
+		stage_num = sapply(event_db$stage, which_stage_fun)
+				
+		rate_link_helper_fun = function(i){			
+			mortality_rates[[rate_num[i]]][stage_num[i]]
+			}
+			
+		sapply(1: length(rate_num), rate_link_helper_fun)
+		}
+		
+	mortality_rate = rate_link_fun(anthro_mortality_rates, anthro_melt, sub_event_db)
 
 	# Define a function to probabilistically cause death 
 	# within each brood (agent)
