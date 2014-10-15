@@ -113,8 +113,8 @@ for(w in (incubation+1):52){
 # Larvae become juveniles...
 event_db=larvae_to_juvenile(event_db, t)
 
-# Insert 'new' adults into age-structured model, and
-# age surviving adults
+# Insert 'new' adults into age-structured model (none in for 
+# the first year), and age surviving adults
 Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)
 
 # Now loop for remainder of the simulation

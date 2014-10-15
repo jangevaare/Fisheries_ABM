@@ -138,7 +138,7 @@ anthro_mortality=function(event_db, habitat_melt, time, anthro_mortality_rates){
 	
 	# Prepare to update `event_db`
 	sub_event_db$num_alive = sub_event_db$num_alive - deaths
-	sub_event_db$num_natural_death = sub_event_db$num_anthro_death + deaths
+	sub_event_db$num_anthro_death = sub_event_db$num_anthro_death + deaths
 	sub_event_db$change_id = sub_event_db$change_id + 1
 	sub_event_db$time = time
 	
