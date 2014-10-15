@@ -27,7 +27,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 	if(is.data.frame(event_db)){
 		rbind(event_db,
 		data.frame('agent_id'=(max(event_db$agent_id)+1):(max(event_db$agent_id)+length(eggs)),
-				   'change_id'=max(event_db$change_id)+1,
+				   'change_id'=max(event_db$change_id),
 				   'time'=time,
 		 		   'stage'=as.vector(rep('egg', length(eggs))),
 		 		   'location_id'=rownames(spawning_melt)[site_assignment],
