@@ -89,19 +89,22 @@ nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
 # OTHER ANTHROPOGENIC MORTALITY (LOCATION, STAGE)
 ###########################################################
 
-anthro_mortality=function(event_db, stage, anthro_melt, time, anthro_mortality_rates)
-	{
-	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)]) & event_db$time==time & event_db$stage==stage),]
-	                        	
-	# Determine location 
+anthro_mortality=function(event_db, habitat_melt, time, anthro_mortality_rates){
+	# Load in latest portion of `event_db`, the last changed
+	# at the specified time
+	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
+	
+	# Define a habitat preferability determining function
 	anthro_fun=function(location_id){
-		anthro_melt$value[rownames(anthro_melt)==location_id]}
+		anthro_melt$value[rownames(anthro_melt)==location_id]
+		}
 	
-	# Link location to special mortality rates
-	mortality_rate=anthro_mortality_rates[sapply(sub_event_db$location_id, anthro_fun)]
-	
-	# Probabilistically cause death within each brood
+	# Link agents to mortality rates specific to location
+	# and stage
+	mortality_rate=anthro_mortality_rates[[c('egg', 'larvae', 'juvenile')==sub_event_db$stage]][sapply(sub_event_db$location_id, anthro_fun)]
+
+	# Define a function to probabilistically cause death 
+	# within each brood (agent)
 	binomial_death=function(x){
 		rbinom(1, sub_event_db$num_alive[x], mortality_rate[x])}
 	
@@ -109,13 +112,13 @@ anthro_mortality=function(event_db, stage, anthro_melt, time, anthro_mortality_r
 	
 	# Prepare to update `event_db`
 	sub_event_db$num_alive = sub_event_db$num_alive - deaths
-	sub_event_db$num_anthro_death = sub_event_db$num_anthro_death + deaths
+	sub_event_db$num_natural_death = sub_event_db$num_anthro_death + deaths
 	sub_event_db$change_id = sub_event_db$change_id + 1
 	sub_event_db$time = time
 	
 	rbind(event_db, sub_event_db)
 	}
-
+	
 ###########################################################
 # STAGE ADVANCEMENT FUNCTIONS
 ###########################################################
