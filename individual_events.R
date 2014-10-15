@@ -57,7 +57,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
 	# Load in latest portion of `event_db`, the last changed
 	# at the specified time
-	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
+	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id) & event_db$stage !='adult',]
 	
 	rate_link_fun = function(mortality_rates, melt, event_db){
 		which_stage_fun = function(stage){
@@ -103,7 +103,7 @@ nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
 anthro_mortality=function(event_db, habitat_melt, time, anthro_mortality_rates){
 	# Load in latest portion of `event_db`, the last changed
 	# at the specified time
-	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id),]
+	sub_event_db = event_db[event_db$time==time & event_db$change_id==max(event_db[event_db$time==time,]$change_id) & event_db$stage !='adult',]
 	
 	# Link agents to mortality rates specific to location
 	# and stage
@@ -153,7 +153,7 @@ egg_to_larvae=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='egg')]))),]
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])) & event_db$stage !='adult'),]
 	                        
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -168,7 +168,7 @@ larvae_to_juvenile=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='larvae')]))),]
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])) & event_db$stage !='adult'),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
@@ -183,13 +183,13 @@ juvenile_to_adult=function(event_db, time)
 	{
 	# Load in latest portion of `event_db`
 	sub_event_db = event_db[(event_db$time==time & 
-	                        (event_db$change_id==max(event_db$change_id[(event_db$time == time) & (event_db$stage=='juvenile')]))),]
+	                        (event_db$change_id==max(event_db$change_id[event_db$time == time])) & event_db$stage !='adult'),]
 
 	# Update `event_db`
 	sub_event_db$stage=as.vector(sub_event_db$stage)
 	sub_event_db$stage[sub_event_db$stage == 'juvenile']='adult'
 	sub_event_db$change_id = sub_event_db$change_id + 1
-	sub_event_db$time = time
+	sub_event_db$time[sub_event_db$stage == 'adult'] = time
 	
 	rbind(event_db, sub_event_db)
 	}

@@ -97,7 +97,7 @@ event_db=spawning(eggs, spawning_melt, t, NA)
 # Weekly mortality and movement
 for(w in 1:incubation){
 	event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
-	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rate)
+	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rates)
 	}
 
 # Eggs hatch...
@@ -105,7 +105,7 @@ event_db=egg_to_larvae(event_db, t)
 
 for(w in (incubation+1):52){
 	event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
-	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rate)
+	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rates)
 	}
 
 # Harvest adults here
@@ -130,10 +130,9 @@ for(t in 2:(sim_length-1)){
 	event_db=egg_to_larvae(event_db, t)
 
 	for(w in (incubation+1):52){
-		event_db=nat_mortality(event_db, 'larvae', habitat_melt, t, larval_nat_mortality_rates)
-		event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, juvenile_nat_mortality_rates)
-		event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)
-		event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rate)}
+		event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
+		event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rates)
+		}
 
 	# Harvest adults here
 
