@@ -22,12 +22,14 @@
 egg_nat_mortality_rates = c(0.02, 0.02, 0.02)
 larval_nat_mortality_rates = c(0.02, 0.03, 0.05)
 juvenile_nat_mortality_rates = c(0.01, 0.02, 0.04)
+nat_mortality_rates = list(egg_nat_mortality_rates, larval_nat_mortality_rates, juvenile_nat_mortality_rates)
 
 # Additional mortality in the presence and absence of 
 # anthropogenic impact
 egg_anthro_mortality_rate = c(0, 0.01)
 larval_anthro_mortality_rate = c(0, 0.05)
 juvenile_anthro_mortality_rate = c(0, 0.05)
+anthro_mortality_rates = list(egg_anthro_mortality_rate, larval_anthro_mortality_rate, juvenile_anthro_mortality_rate)
 
 # Proportion of fish sexually mature at each age class
 # (ages 2, 3, 4, 5, 6+)
@@ -94,16 +96,16 @@ event_db=spawning(eggs, spawning_melt, t, NA)
 
 # Weekly mortality and movement
 for(w in 1:incubation){
-	event_db=nat_mortality(event_db, 'egg', habitat_melt, t, egg_nat_mortality_rates)
-	event_db=anthro_mortality(event_db, 'egg', anthro_melt, t, egg_anthro_mortality_rate)
+	event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
+	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rate)
 	}
 
 # Eggs hatch...
 event_db=egg_to_larvae(event_db, t)
 
 for(w in (incubation+1):52){
-	event_db=nat_mortality(event_db, 'larvae', habitat_melt, t, larval_nat_mortality_rates)
-	event_db=anthro_mortality(event_db, 'larvae', anthro_melt, t, larval_anthro_mortality_rate)
+	event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
+	event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rate)
 	}
 
 # Harvest adults here
@@ -121,10 +123,8 @@ for(t in 2:(sim_length-1)){
 	event_db=spawning(eggs, spawning_melt, t, event_db)	
 
 	for(w in 1:incubation){
-		event_db=nat_mortality(event_db, 'eggs', habitat_melt, t, egg_nat_mortality_rates)
-		event_db=nat_mortality(event_db, 'juvenile', habitat_melt, t, larval_nat_mortality_rates)
-		event_db=anthro_mortality(event_db, 'eggs', anthro_melt, t, egg_anthro_mortality_rate)
-		event_db=anthro_mortality(event_db, 'juvenile', anthro_melt, t, juvenile_anthro_mortality_rate)
+		event_db=nat_mortality(event_db, habitat_melt, t, nat_mortality_rates)
+		event_db=anthro_mortality(event_db, anthro_melt, t, anthro_mortality_rates)
 		}
 
 	event_db=egg_to_larvae(event_db, t)
