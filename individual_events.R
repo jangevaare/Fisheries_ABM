@@ -72,7 +72,7 @@ nat_mortality = function(event_db, habitat_melt, time, nat_mortality_rates){
 		stage_num = sapply(event_db$stage, which_stage_fun)
 				
 		rate_link_helper_fun = function(i){			
-			mortality_rates[[rate_num[i]]][stage_num[i]]
+			mortality_rates[[stage_num[i]]][rate_num[i]]
 			}
 			
 		sapply(1: length(rate_num), rate_link_helper_fun)
@@ -121,7 +121,7 @@ anthro_mortality=function(event_db, habitat_melt, time, anthro_mortality_rates){
 		stage_num = sapply(event_db$stage, which_stage_fun)
 				
 		rate_link_helper_fun = function(i){			
-			mortality_rates[[rate_num[i]]][stage_num[i]]
+			mortality_rates[[stage_num[i]]][rate_num[i]]
 			}
 			
 		sapply(1: length(rate_num), rate_link_helper_fun)
