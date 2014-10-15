@@ -138,4 +138,7 @@ for(t in 2:(sim_length-1)){
 
 	event_db=juvenile_to_adult(event_db, t)
 	event_db=larvae_to_juvenile(event_db, t)
-	Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)}
+	Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)
+	if(sum(Age_Matrix[,t+1])>1e13) break
+	if(any(is.na(Age_Matrix[,t+1]))) break
+	}
