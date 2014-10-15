@@ -115,7 +115,7 @@ event_db=larvae_to_juvenile(event_db, t)
 Age_Matrix=adult_update(Age_Matrix, survivorship, event_db, t)
 
 # Now loop for remainder of the simulation
-for(t in 2:49){
+for(t in 2:(sim_length-1)){
 	eggs = egg_production(Age_Matrix, prop_mature, egg_num, t)	
 	event_db=spawning(eggs, spawning_melt, t, event_db)	
 

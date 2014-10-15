@@ -58,7 +58,7 @@ spawning=function(eggs, spawning_melt, time, event_db){
 nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 	{
 	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)])),]
+	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)]) & event_db$time==time & event_db$stage==stage),]
 	
 	# Determine habitat preferability
 	preferability_fun=function(location_id){
@@ -89,7 +89,7 @@ nat_mortality=function(event_db, stage, habitat_melt, time, nat_mortality_rates)
 anthro_mortality=function(event_db, stage, anthro_melt, time, anthro_mortality_rates)
 	{
 	# Load in latest portion of `event_db` specific to `stage`
-	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)])),]
+	sub_event_db = event_db[(event_db$change_id==max(event_db$change_id[(event_db$time==time) & (event_db$stage==stage)]) & event_db$time==time & event_db$stage==stage),]
 	                        	
 	# Determine location 
 	anthro_fun=function(location_id){
